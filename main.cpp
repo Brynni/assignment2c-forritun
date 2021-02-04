@@ -1,5 +1,9 @@
+//Programming Rules
+//1. You can NOT use std::string or any STL data structure, e.g. std::vector, std::set, std::list
+
+
 //PART 1 60%
-//TODO Take a word from wordlist
+//TODO Take a word from wordlist X
 //TODO Scramble word
 //TODO Show scrambled word
 //TODO Allow user to guess the word
@@ -29,3 +33,84 @@
 
 //5-10% BONUS
 // Add extra mode crossword jumble
+
+
+#include <iostream>
+#include <fstream>
+#include <cmath>
+#include <stdlib.h>
+#include <string.h>
+
+using namespace std;
+
+int main() {
+    
+
+    char nameOfFile[32];
+    cout << "Please enter a name: "; // Ask user for name of file
+    cin >> nameOfFile; // Get their input
+    strcat(nameOfFile, ".txt"); // Add txt ending 
+
+    FILE *word_file_read;
+    char word[50];
+    char i;
+    char randNum;
+    i = 0;
+    randNum = 23;
+    
+
+    word_file_read = fopen(nameOfFile, "r");
+
+    if (word_file_read == NULL)
+        cout << "Cant find the file"; // Ask user for name of file
+    else
+    {
+        while (fscanf(word_file_read, "%s", word) != EOF)
+        {
+            if (i == randNum)
+            {
+                printf("%s\n", word);
+                i=0;
+                break;
+            }
+            i++;
+        }
+        fclose(word_file_read);
+    }
+
+    return 0;
+}
+
+
+/* 
+std::ifstream fs;
+    fs.open ("newwords.txt", ios::in);
+
+    //fs >> " more lorem ipsum";
+    char ch;
+    char junkwords;
+    char num;
+    char i;
+    num = 10;
+    i = 0;
+    while (i < num) {
+        if (num == i)
+        {
+            fs >> ch;
+            i = 0;
+            break;
+        }
+        if(ch == ' ' || ch == '\n') 
+		{ 
+			printf("\n");  
+		} 
+        i++;
+        fs >> junkwords;
+        cout << junkwords;
+    }
+    
+    cout << ch;
+    std::cout << "\nHello World! A NEW FILE HAS BEEN BORN HALLELUJAH! \n";
+    cout << junkwords;
+    std::cout << "\nHello World! A NEW FILE HAS BEEN BORN HALLELUJAH! \n";
+    fs.close(); */
