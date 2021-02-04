@@ -53,13 +53,14 @@ int main() {
 
     FILE *word_file_read;
     char word[50];
+    char wordcopy[50];
     char i;
     char randNum;
     i = 0;
     randNum = 23;
-    
+    char dest[40];
 
-    word_file_read = fopen(nameOfFile, "r");
+    word_file_read = fopen(nameOfFile, "r+");
 
     if (word_file_read == NULL)
         cout << "Cant find the file"; // Ask user for name of file
@@ -68,14 +69,25 @@ int main() {
         while (fscanf(word_file_read, "%s", word) != EOF)
         {
             if (i == randNum)
-            {
-                printf("%s\n", word);
+            {   
+                int i = 0;
+                char selectedWordArray [50];
+                int b = 0;
+                for (b = 0;word[b] != '\0'; b++)
+                {
+                    selectedWordArray[b] << word[b];
+                    cout << word[b];
+                    
+                    
+                }
+                cout << "\nlength of string is : "<< b << "\n";
                 i=0;
                 break;
             }
             i++;
         }
         fclose(word_file_read);
+        cout << "were done here!\n";
     }
 
     return 0;
