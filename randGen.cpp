@@ -1,6 +1,9 @@
 #include <iostream>
 using namespace std;
 
+
+// Iterates over the index array and checks if the randNum has already come up before
+// returns false if it hasn't
 bool checkIndexArray(int num, int arr[], int arrSize){
     for (int i = 0; i<arrSize; i++){
         if(arr[i] == num){
@@ -12,25 +15,23 @@ bool checkIndexArray(int num, int arr[], int arrSize){
 };
 
 
-// bool isLetterAtCorrectIndex(char letter, char arr[], int index ) {
-//     if(arr[index]==letter){
-//         return true;
-//     }
-//     return false;
-// }
-
+bool checkCharAtIndex(char letter, char arr[], int index){
+    if(arr[index]==letter){
+        return true;
+    }
+    return false;
+}
 
 
 int main() {
-    char myArr[8];
+    char myArr[4];
     myArr[0] = 'a';
     myArr[1] = 'b';
-    myArr[2] = 'c';
-    myArr[3] = 'd';   
-    myArr[4] = 'd';   
-    myArr[5] = 'a';
-    myArr[6] = 'a';
-    myArr[7] = 'a';
+    myArr[2] = 'b';
+    myArr[3] = 'a';   
+ 
+
+
 
     int rand_index_array[sizeof(myArr)];
     char scrambled_arr[sizeof(myArr)];
@@ -40,29 +41,37 @@ int main() {
         int randomNum = rand() % sizeof(myArr);
         char letter = myArr[randomNum];
 
-        // Should check if the index has already been added
-        // If it hasn't been added -> check if the original array has the same letter at the index i
-        // If it doesn't have the same character there AND it doesn't have the index already in the rand_index array
-        // it should add the character to the scrambled array
+        // checks if index is in the array
+        bool indexInArray = checkIndexArray(randomNum, rand_index_array, sizeof(myArr));
 
-        // so far it almost works...
-        while(checkIndexArray(randomNum, rand_index_array, sizeof(myArr)) && (letter == myArr[i])){
-            int randomNum = rand () % sizeof(myArr);
-            char letter = myArr[randomNum];
-            checkIndexArray(randomNum,rand_index_array, sizeof(myArr));
+        // check if myArr[i] contains the same letter
+        bool charInArr = checkCharAtIndex(letter, myArr, i);
+
+        // While either one is true generate a random number and check both again      
+        while(indexInArray || charInArr){
+            randomNum = rand () % sizeof(myArr);
+            letter = myArr[randomNum];
+            indexInArray = checkIndexArray(randomNum, rand_index_array, sizeof(myArr));
+            charInArr = checkCharAtIndex(letter, myArr, i);
         };
 
+        // Finally write the new index to rand_index_array and the scrambled letter to the scrambled letter array
         rand_index_array[i] = randomNum;
         scrambled_arr[i] = myArr[randomNum];
-        cout << "Scrambled  : " << scrambled_arr[i] << endl;
-        cout << "Correct    : " << myArr[i] << endl;
     };
 
-    for (int i=0; i < sizeof(myArr); i++){
-        cout << myArr[rand_index_array[i]];
-    }
+    cout << "THE OG ARRAY" << endl;
+    for (int i = 0; i<sizeof(myArr); i++){
+        cout << myArr[i];
+    };
 
+    cout << " " << endl;
 
+    cout << "THE scrambled ARRAY" << endl;
+    for (int i = 0; i<sizeof(scrambled_arr); i++){
+        cout << scrambled_arr[i];
+    };
 
-
+    
+ 
 };
