@@ -1,6 +1,12 @@
-#include <iostream>
+
+#include "randGen.h"
 using namespace std;
 
+//Overide out<< operator to output the entire data bank of the word
+ostream& operator<<(ostream& out, WordScramble *wordscramble){
+    out << "This is the length: " << wordscramble->length << " This is the word: " << wordscramble->arrPointer;
+    return out;
+}
 
 // Iterates over the index array and checks if the randNum has already come up before
 // returns false if it hasn't
@@ -21,11 +27,11 @@ bool checkCharAtIndex(char letter, char arr[], int index){
     }
     return false;
 }
+ 
 
-
-int main() {
+int ScrambleArray(int length, char* word) {
     char myArr[4];
-    myArr[0] = 'a';
+    myArr[0] = 'c';
     myArr[1] = 'b';
     myArr[2] = 'b';
     myArr[3] = 'a';   
@@ -65,13 +71,10 @@ int main() {
         cout << myArr[i];
     };
 
-    cout << " " << endl;
+    cout << endl;
 
     cout << "THE scrambled ARRAY" << endl;
     for (int i = 0; i<sizeof(scrambled_arr); i++){
         cout << scrambled_arr[i];
     };
-
-    
- 
 };

@@ -41,6 +41,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "randGen.h"
+
 using namespace std;
 
 int main() {
@@ -60,6 +62,11 @@ int main() {
     randNum = 23;
     char dest[40];
 
+
+
+    
+
+
     word_file_read = fopen(nameOfFile, "r+");
 
     if (word_file_read == NULL)
@@ -71,18 +78,24 @@ int main() {
             if (i == randNum)
             {   
                 int i = 0;
-                char selectedWordArray [50];
                 int b = 0;
                 for (b = 0;word[b] != '\0'; b++)
                 {
-                    selectedWordArray[b] << word[b];
                     cout << word[b];
-                    
-                    
                 }
+                cout << word;
                 cout << "\nlength of string is : "<< b << "\n";
                 i=0;
+                WordScramble *scrambledWord;
+                scrambledWord = new WordScramble();
+                scrambledWord->length = b;
+                scrambledWord->arrPointer = word;
+                cout << scrambledWord->length << "\n";
+                cout << scrambledWord->arrPointer << "\n";
+                
+                cout << scrambledWord << endl;
                 break;
+                
             }
             i++;
         }
@@ -92,37 +105,3 @@ int main() {
 
     return 0;
 }
-
-
-/* 
-std::ifstream fs;
-    fs.open ("newwords.txt", ios::in);
-
-    //fs >> " more lorem ipsum";
-    char ch;
-    char junkwords;
-    char num;
-    char i;
-    num = 10;
-    i = 0;
-    while (i < num) {
-        if (num == i)
-        {
-            fs >> ch;
-            i = 0;
-            break;
-        }
-        if(ch == ' ' || ch == '\n') 
-		{ 
-			printf("\n");  
-		} 
-        i++;
-        fs >> junkwords;
-        cout << junkwords;
-    }
-    
-    cout << ch;
-    std::cout << "\nHello World! A NEW FILE HAS BEEN BORN HALLELUJAH! \n";
-    cout << junkwords;
-    std::cout << "\nHello World! A NEW FILE HAS BEEN BORN HALLELUJAH! \n";
-    fs.close(); */
