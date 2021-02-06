@@ -33,69 +33,44 @@ char* ScrambleArray(WordScramble *wordscramble) {
       
     char* myWord = wordscramble->arrPointer;
     int arrLength = wordscramble->length;
+    int arrMaxPos = arrLength -1;
     int highRoll = arrLength;
 
     int* rand_index_array = new int[arrLength]; //Make sure to delete dead arrays after running
     char* scrambled_arr = new char[arrLength];
     int* used_ind = new int[arrLength];
-    // maybe this will make it faster idno
-    for (int i=0; i<arrLength; i++){
-        used_ind[i] = i;
-        };
-
+    
     for (int i=0; i<arrLength;i++){
 
-        int randomNum = rand() % highRoll;
-        
+        int randomNum = rand()%arrMaxPos;
         char letter = myWord[randomNum];
 
         // checks if index is in the array
-        bool indexInArray = checkIndexArray(randomNum, rand_index_array, arrLength);
+        bool indexInArray = checkIndexArray(randomNum, rand_index_array, arrMaxPos);
 
-        // check if myArr[i] contains the same letter
-        //bool charInArr = checkCharAtIndex(letter, myWord, i);
-        // While both are true generate a random number and check both again   
-        while(indexInArray){ //|| charInArr){
-            srand (time(NULL));
-            randomNum = rand () % highRoll;
-            
-            letter = myWord[randomNum];
-            indexInArray = checkIndexArray(randomNum, rand_index_array, arrLength);
-             if(!indexInArray && randomNum == highRoll){
-                highRoll = highRoll-1;
+        // check space is occupied
+        // due to random being not so random, just rotate the letter until a space is found   
+        while(indexInArray){ 
+            if (randomNum == arrMaxPos)
+            {
+                randomNum = 0;
+                indexInArray = checkIndexArray(randomNum, rand_index_array, arrMaxPos);
             }
-
-            if(indexInArray && i==arrLength-1){
-                // Okay this is just a shortcut for finding the last letter
-                bool checker = false;
-                while(!checker){
-                    for(int j=0; j<arrLength; j++){
-                        if(used_ind[j]!=100){
-                            randomNum = used_ind[j];
-                            indexInArray = false;
-                            checker = true;
-                        }
-                    }
-                } 
-
-            };
-
-
-
-            //charInArr = checkCharAtIndex(letter, myWord, i);
+            else{
+                randomNum++;
+                indexInArray = checkIndexArray(randomNum, rand_index_array, arrMaxPos);
+            }
         };  
         cout << randomNum << endl;
         // Finally write the new index to rand_index_array and the scrambled letter to the scrambled letter array
         rand_index_array[i] = randomNum;
         scrambled_arr[i] = myWord[randomNum];
-        //idno
-        used_ind[randomNum] = 100;
-        //cout << "used arr: "<<*used_ind;
     };
 
-    scrambled_arr[arrLength] = '\0'; 
     wordscramble->scrambledArrPointer = scrambled_arr;
     delete rand_index_array;
+    delete used_ind;
+    
     return scrambled_arr;
     
 };

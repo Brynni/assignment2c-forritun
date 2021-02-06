@@ -48,62 +48,64 @@ using namespace std;
 
 int main() {
     
-
+    bool gameQuit = false;
     char nameOfFile[32];
     cout << "Please enter a name: "; // Ask user for name of file
     cin >> nameOfFile; // Get their input
     strcat(nameOfFile, ".txt"); // Add txt ending 
-
     FILE *word_file_read;
     char word[50];
     char i;
     char randNum;
     i = 0;
-    srand (time(NULL));
-    randNum = rand()%606;
-    char dest[40];
-
-
-
-    
-
-
-    word_file_read = fopen(nameOfFile, "r+");
-
-    if (word_file_read == NULL)
-        cout << "Cant find the file"; // Ask user for name of file
-    else
+    while (gameQuit == false)
     {
-        while (fscanf(word_file_read, "%s", word) != EOF)
-        {
-            if (i == randNum)
-            {   
-                int i = 0;
-                int b = 0;
-                for (b = 0;word[b] != '\0'; b++)
-                {
-                    cout << word[b];
-                }
-                cout << word;
-                cout << "\nlength of string is : "<< b << "\n";
-                i=0;
-                WordScramble *scrambledWord;
-                scrambledWord = new WordScramble();
-                scrambledWord->length = b;
-                scrambledWord->arrPointer = word;
-                cout << scrambledWord->length << "\n";
-                cout << scrambledWord->arrPointer << "\n";
-                scrambledWord->scrambledArrPointer=ScrambleArray(scrambledWord);
-                cout << scrambledWord->scrambledArrPointer << "\n";
-                cout << scrambledWord << endl;
-                break;
-                
-            }
-            i++;
-        }
-        fclose(word_file_read);
-        cout << "were done here!\n";
-    }
+        
+        srand (time(NULL));
+        randNum = rand()%606;
+        char dest[40];
 
+
+
+        
+
+
+        word_file_read = fopen(nameOfFile, "r+");
+
+        if (word_file_read == NULL)
+            cout << "Cant find the file"; // Ask user for name of file
+        else
+        {
+            while (fscanf(word_file_read, "%s", word) != EOF)
+            {
+                if (i == randNum)
+                {   
+                    int i = 0;
+                    int b = 0;
+                    for (b = 0;word[b] != '\0'; b++)
+                    {
+                        cout << word[b];
+                    }
+                    cout << word;
+                    cout << "\nlength of string is : "<< b << "\n";
+                    i=0;
+                    WordScramble *scrambledWord;
+                    scrambledWord = new WordScramble();
+                    scrambledWord->length = b;
+                    scrambledWord->arrPointer = word;
+                    cout << scrambledWord->length << "\n";
+                    cout << scrambledWord->arrPointer << "\n";
+                    scrambledWord->scrambledArrPointer=ScrambleArray(scrambledWord);
+                    cout << scrambledWord->scrambledArrPointer << "\n";
+                    cout << scrambledWord << endl;
+                    delete scrambledWord;
+                }
+                i++;
+            }
+            fclose(word_file_read);
+            
+            cout << "were done here!\n";
+        }
+    }
     return 0;
 }
