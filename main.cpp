@@ -55,7 +55,6 @@ int main() {
 
     FILE *word_file_read;
     char word[50];
-    char wordcopy[50];
     char i;
     char randNum;
     i = 0;
@@ -92,7 +91,8 @@ int main() {
                 scrambledWord->arrPointer = word;
                 cout << scrambledWord->length << "\n";
                 cout << scrambledWord->arrPointer << "\n";
-                
+                scrambledWord->scrambledArrPointer=ScrambleArray(scrambledWord);
+                cout << scrambledWord->scrambledArrPointer << "\n";
                 cout << scrambledWord << endl;
                 break;
                 

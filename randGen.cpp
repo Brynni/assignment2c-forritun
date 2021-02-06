@@ -1,10 +1,10 @@
-
+#include <time.h> 
 #include "randGen.h"
 using namespace std;
 
 //Overide out<< operator to output the entire data bank of the word
 ostream& operator<<(ostream& out, WordScramble *wordscramble){
-    out << "This is the length: " << wordscramble->length << " This is the word: " << wordscramble->arrPointer;
+    out << "This is the length: " << wordscramble->length << " This is the word: " << wordscramble->arrPointer << " This is the scrambled word: " << wordscramble->scrambledArrPointer;
     return out;
 }
 
@@ -29,52 +29,43 @@ bool checkCharAtIndex(char letter, char arr[], int index){
 }
  
 
-int ScrambleArray(int length, char* word) {
-    char myArr[4];
-    myArr[0] = 'c';
-    myArr[1] = 'b';
-    myArr[2] = 'b';
-    myArr[3] = 'a';   
- 
+char* ScrambleArray(WordScramble *wordscramble) {
+      
+    char* myWord = wordscramble->arrPointer;
+    int arrLength = wordscramble->length;
 
+    int* rand_index_array = new int[arrLength]; //Make sure to delete dead arrays after running
+    char* scrambled_arr = new char[arrLength];
 
+    for (int i=0; i<arrLength;i++){
 
-    int rand_index_array[sizeof(myArr)];
-    char scrambled_arr[sizeof(myArr)];
-
-    for (int i=0; i<sizeof(myArr);i++){
-
-        int randomNum = rand() % sizeof(myArr);
-        char letter = myArr[randomNum];
+        int randomNum = rand() % arrLength;
+        
+        char letter = myWord[randomNum];
 
         // checks if index is in the array
-        bool indexInArray = checkIndexArray(randomNum, rand_index_array, sizeof(myArr));
+        bool indexInArray = checkIndexArray(randomNum, rand_index_array, arrLength);
 
         // check if myArr[i] contains the same letter
-        bool charInArr = checkCharAtIndex(letter, myArr, i);
-
-        // While either one is true generate a random number and check both again      
+        bool charInArr = checkCharAtIndex(letter, myWord, i);
+        // While both are true generate a random number and check both again   
         while(indexInArray || charInArr){
-            randomNum = rand () % sizeof(myArr);
-            letter = myArr[randomNum];
-            indexInArray = checkIndexArray(randomNum, rand_index_array, sizeof(myArr));
-            charInArr = checkCharAtIndex(letter, myArr, i);
-        };
-
+            srand (time(NULL));
+            randomNum = rand () % arrLength;
+            
+            letter = myWord[randomNum];
+            indexInArray = checkIndexArray(randomNum, rand_index_array, arrLength);
+            charInArr = checkCharAtIndex(letter, myWord, i);
+        };  
+        cout << randomNum;
         // Finally write the new index to rand_index_array and the scrambled letter to the scrambled letter array
         rand_index_array[i] = randomNum;
-        scrambled_arr[i] = myArr[randomNum];
+        scrambled_arr[i] = myWord[randomNum];
     };
 
-    cout << "THE OG ARRAY" << endl;
-    for (int i = 0; i<sizeof(myArr); i++){
-        cout << myArr[i];
-    };
-
-    cout << endl;
-
-    cout << "THE scrambled ARRAY" << endl;
-    for (int i = 0; i<sizeof(scrambled_arr); i++){
-        cout << scrambled_arr[i];
-    };
+    scrambled_arr[arrLength] = '\0'; 
+    wordscramble->scrambledArrPointer = scrambled_arr;
+    delete rand_index_array;
+    return scrambled_arr;
+    
 };

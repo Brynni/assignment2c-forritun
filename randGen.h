@@ -9,7 +9,9 @@ class WordScramble{
     public:
         int length;
         char* arrPointer;
+        char* scrambledArrPointer;
 
+        friend char* ScrambleArray(WordScramble *wordscramble);
         friend ostream& operator<<(ostream& out, WordScramble *wordscramble);
 };
 
