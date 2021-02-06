@@ -33,6 +33,7 @@ char* ScrambleArray(WordScramble *wordscramble) {
       
     char* myWord = wordscramble->arrPointer;
     int arrLength = wordscramble->length;
+    int highRoll = arrLength;
 
     int* rand_index_array = new int[arrLength]; //Make sure to delete dead arrays after running
     char* scrambled_arr = new char[arrLength];
@@ -44,7 +45,7 @@ char* ScrambleArray(WordScramble *wordscramble) {
 
     for (int i=0; i<arrLength;i++){
 
-        int randomNum = rand() % arrLength;
+        int randomNum = rand() % highRoll;
         
         char letter = myWord[randomNum];
 
@@ -56,10 +57,13 @@ char* ScrambleArray(WordScramble *wordscramble) {
         // While both are true generate a random number and check both again   
         while(indexInArray){ //|| charInArr){
             srand (time(NULL));
-            randomNum = rand () % arrLength;
+            randomNum = rand () % highRoll;
             
             letter = myWord[randomNum];
             indexInArray = checkIndexArray(randomNum, rand_index_array, arrLength);
+             if(!indexInArray && randomNum == highRoll){
+                highRoll = highRoll-1;
+            }
 
             if(indexInArray && i==arrLength-1){
                 // Okay this is just a shortcut for finding the last letter
