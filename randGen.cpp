@@ -49,13 +49,13 @@ char* ScrambleArray(WordScramble *wordscramble) {
         // check if myArr[i] contains the same letter
         bool charInArr = checkCharAtIndex(letter, myWord, i);
         // While both are true generate a random number and check both again   
-        while(indexInArray || charInArr){
+        while(indexInArray){ //|| charInArr){
             srand (time(NULL));
             randomNum = rand () % arrLength;
             
             letter = myWord[randomNum];
             indexInArray = checkIndexArray(randomNum, rand_index_array, arrLength);
-            charInArr = checkCharAtIndex(letter, myWord, i);
+            //charInArr = checkCharAtIndex(letter, myWord, i);
         };  
         cout << randomNum;
         // Finally write the new index to rand_index_array and the scrambled letter to the scrambled letter array
