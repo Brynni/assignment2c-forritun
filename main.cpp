@@ -40,6 +40,7 @@
 #include <cmath>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h> 
 
 #include "randGen.h"
 
@@ -58,7 +59,8 @@ int main() {
     char i;
     char randNum;
     i = 0;
-    randNum = 23;
+    srand (time(NULL));
+    randNum = rand()%606;
     char dest[40];
 
 
