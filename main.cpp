@@ -49,17 +49,39 @@ using namespace std;
 int main() {
     
     bool gameQuit = false;
+    bool fileChosen = false;
+    bool correctGuess;
     char nameOfFile[32];
-    cout << "Please enter a name: "; // Ask user for name of file
-    cin >> nameOfFile; // Get their input
-    strcat(nameOfFile, ".txt"); // Add txt ending 
-    FILE *word_file_read;
-    char word[50];
-    char i;
-    char randNum;
-    i = 0;
+
+    char* quitGameArray = new char[4];
+    quitGameArray[0] = 'q';
+    quitGameArray[1] = 'u';
+    quitGameArray[2] = 'i';
+    quitGameArray[3] = 't';
     while (gameQuit == false)
     {
+        
+        cout << "Please enter a name: "; // Ask user for name of file
+        cin >> nameOfFile; // Get their input
+        
+        
+        if (nameOfFile[0] == quitGameArray[0] && nameOfFile[1] == quitGameArray[1] && nameOfFile[2] == quitGameArray[2] && nameOfFile[3] == quitGameArray[3] == nameOfFile[4] == quitGameArray[4])
+            {
+                gameQuit = true;
+                
+            }
+
+        
+        strcat(nameOfFile, ".txt"); // Add txt ending 
+        FILE *word_file_read;
+        char word[50];
+        char i;
+        char randNum;
+        i = 0;
+
+    
+
+    
         
         srand (time(NULL));
         randNum = rand()%606;
@@ -72,39 +94,77 @@ int main() {
 
         word_file_read = fopen(nameOfFile, "r+");
 
-        if (word_file_read == NULL)
-            cout << "Cant find the file"; // Ask user for name of file
+        if (word_file_read == NULL && gameQuit != true)
+        {
+            cout << "Cant find the file! \n"; // Ask user for name of file
+        }
         else
         {
+            fileChosen = true;
             while (fscanf(word_file_read, "%s", word) != EOF)
             {
-                if (i == randNum)
+                if (i == randNum && gameQuit == false)
                 {   
+                    correctGuess = false;
                     int i = 0;
                     int b = 0;
                     for (b = 0;word[b] != '\0'; b++)
                     {
-                        cout << word[b];
+                        //Mhm counting letters. Maybe use a built in function
                     }
-                    cout << word;
-                    cout << "\nlength of string is : "<< b << "\n";
+                    
                     i=0;
                     WordScramble *scrambledWord;
                     scrambledWord = new WordScramble();
                     scrambledWord->length = b;
+                    char* usersGuess = new char[b];
+                    char* quitGameArray = new char[4];
+                    quitGameArray[0] = 'q';
+                    quitGameArray[1] = 'u';
+                    quitGameArray[2] = 'i';
+                    quitGameArray[3] = 't';
+                    quitGameArray[4] = '!';
+                    
+
                     scrambledWord->arrPointer = word;
-                    cout << scrambledWord->length << "\n";
-                    cout << scrambledWord->arrPointer << "\n";
+                    
                     scrambledWord->scrambledArrPointer=ScrambleArray(scrambledWord);
-                    cout << scrambledWord->scrambledArrPointer << "\n";
                     cout << scrambledWord << endl;
+                    while (correctGuess == false && gameQuit == false){
+                        cout << "\nPlease Enter a guess : ";
+                        cin >> usersGuess;
+                        bool matchingElems = true;
+                        for (int k = 0;k < b; k++)
+                        {
+                            if (k == 0 && usersGuess[0] == quitGameArray[0] && usersGuess[1] == quitGameArray[1] && usersGuess[2] == quitGameArray[2] && usersGuess[3] == quitGameArray[3] && usersGuess[4] == quitGameArray[4])
+                            {
+                                gameQuit = true;
+                                k = b;
+                            }
+                            if (usersGuess[k] != scrambledWord->arrPointer[k] && gameQuit != true)
+                            {
+                                cout << "wrong guess dude, try again \n" << scrambledWord->scrambledArrPointer << "\n";
+                                k = b;
+                                matchingElems = false;
+                            } 
+                            if (gameQuit == true){
+                                cout << "exiting game....";
+                            }
+                        }
+                        if (matchingElems == true)
+                        {
+                            correctGuess = true;
+                        }
+                    }
                     delete scrambledWord;
+                    delete usersGuess;
                 }
                 i++;
             }
             fclose(word_file_read);
             
             cout << "were done here!\n";
+            delete quitGameArray;
         }
     }
     return 0;

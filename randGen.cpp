@@ -33,12 +33,10 @@ char* ScrambleArray(WordScramble *wordscramble) {
       
     char* myWord = wordscramble->arrPointer;
     int arrLength = wordscramble->length;
-    int arrMaxPos = arrLength -1;
-    int highRoll = arrLength;
+    int arrMaxPos = arrLength - 1;
 
-    int* rand_index_array = new int[arrLength]; //Make sure to delete dead arrays after running
-    char* scrambled_arr = new char[arrLength];
-    int* used_ind = new int[arrLength];
+    int* rand_index_array = new int[arrLength+1]; //Make sure to delete dead arrays after running
+    char* scrambled_arr = new char[arrLength+1];
     
     for (int i=0; i<arrLength;i++){
 
@@ -61,15 +59,13 @@ char* ScrambleArray(WordScramble *wordscramble) {
                 indexInArray = checkIndexArray(randomNum, rand_index_array, arrMaxPos);
             }
         };  
-        cout << randomNum << endl;
         // Finally write the new index to rand_index_array and the scrambled letter to the scrambled letter array
         rand_index_array[i] = randomNum;
         scrambled_arr[i] = myWord[randomNum];
     };
-
+    scrambled_arr[arrLength] = '\0';
     wordscramble->scrambledArrPointer = scrambled_arr;
     delete rand_index_array;
-    delete used_ind;
     
     return scrambled_arr;
     
