@@ -71,14 +71,6 @@ int main() {
     hintGameArray[3] = 't';
     hintGameArray[4] = '!';
 
-    /* WordScramble *scrambledWord;
-    scrambledWord = new WordScramble();
-    scrambledWord->length = b;
-    char* usersGuess = new char[b];
-    scrambledWord->arrPointer = word;
-    
-    scrambledWord->scrambledArrPointer=ScrambleArray(scrambledWord); */
-
     Player *player;
     player = new Player();
     player -> pointCount = 0;
