@@ -7,6 +7,7 @@ using namespace std;
 
 class Player{
     public:
+        int amountOfLives;
         int pointCount;
         char* PlayerName; //For the c requirement
 
