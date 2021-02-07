@@ -10,6 +10,7 @@ class WordScramble{
         int length;
         char* arrPointer;
         char* scrambledArrPointer;
+        char* hintPointer;
 
         friend char* ScrambleArray(WordScramble *wordscramble);
         friend ostream& operator<<(ostream& out, WordScramble *wordscramble);

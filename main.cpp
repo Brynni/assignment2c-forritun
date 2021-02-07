@@ -49,6 +49,8 @@ using namespace std;
 int main() {
     
     bool gameQuit = false;
+    bool hintActivated = false;
+    bool hintAskedFor = false;
     bool fileChosen = false;
     bool correctGuess;
     char nameOfFile[32];
@@ -59,6 +61,14 @@ int main() {
     quitGameArray[2] = 'i';
     quitGameArray[3] = 't';
     quitGameArray[4] = '!';
+
+    char* hintGameArray = new char[4];
+    hintGameArray[0] = 'h';
+    hintGameArray[1] = 'i';
+    hintGameArray[2] = 'n';
+    hintGameArray[3] = 't';
+    hintGameArray[4] = '!';
+
     while (gameQuit == false)
     {
         
@@ -129,17 +139,36 @@ int main() {
                         bool matchingElems = true;
                         for (int k = 0;k < b; k++)
                         {
+                            if (k == 0 && usersGuess[0] == hintGameArray[0] && usersGuess[1] == hintGameArray[1] && usersGuess[2] == hintGameArray[2] && usersGuess[3] == hintGameArray[3] && usersGuess[4] == hintGameArray[4])
+                            {
+                                hintAskedFor = true;
+                                k = b;
+                                matchingElems = false;
+                                // Call the new function. See this for example scrambledWord->scrambledArrPointer=ScrambleArray(scrambledWord);
+                                // but with the hint thingy rather
+                                if(hintActivated == false)
+                                {
+                                    hintActivated = true;
+                                }
+                            }
+
                             if (k == 0 && usersGuess[0] == quitGameArray[0] && usersGuess[1] == quitGameArray[1] && usersGuess[2] == quitGameArray[2] && usersGuess[3] == quitGameArray[3] && usersGuess[4] == quitGameArray[4])
                             {
                                 gameQuit = true;
                                 k = b;
                             }
-                            if (usersGuess[k] != scrambledWord->arrPointer[k] && gameQuit != true)
+
+                            if (usersGuess[k] != scrambledWord->arrPointer[k] && gameQuit != true && hintAskedFor == false)
                             {
                                 cout << "wrong guess dude, try again \n" << scrambledWord->scrambledArrPointer << "\n";
                                 k = b;
                                 matchingElems = false;
                             } 
+                            
+                            else{
+                                hintAskedFor = false;
+                            }
+
                             if (gameQuit == true){
                                 cout << "exiting game....";
                             }
@@ -147,6 +176,13 @@ int main() {
                         if (matchingElems == true)
                         {
                             correctGuess = true;
+                            hintActivated = false;
+                        }
+                        if (hintActivated == true)
+                        {
+                            cout << "a hint has been requested!: ";
+                            //Insert the hint elems here to be output
+                            cout << "Insert hint elems here;";
                         }
                     }
                     delete scrambledWord;
@@ -158,6 +194,7 @@ int main() {
             
             cout << "were done here!\n";
             delete quitGameArray;
+            delete hintGameArray;
         }
     }
     return 0;
