@@ -34,9 +34,23 @@ char* ScrambleArray(WordScramble *wordscramble) {
     char* myWord = wordscramble->arrPointer;
     int arrLength = wordscramble->length;
     int arrMaxPos = arrLength - 1;
-
     int* rand_index_array = new int[arrLength+1]; //Make sure to delete dead arrays after running
     char* scrambled_arr = new char[arrLength+1];
+    wordscramble->numOfGuesses = 0;
+    char* hintArr = new char[arrLength+1];
+    int * guessArr = new int[arrLength+1];
+    wordscramble->numOfHints = 0;
+
+    for (int i=0; i<arrLength; i++){
+        hintArr[i] = '-';
+    };
+
+    for (int i=0; i<arrLength; i++){
+        guessArr[i] = i;
+    };
+
+
+
     
     for (int i=0; i<arrLength;i++){
 
@@ -65,8 +79,39 @@ char* ScrambleArray(WordScramble *wordscramble) {
     };
     scrambled_arr[arrLength] = '\0';
     wordscramble->scrambledArrPointer = scrambled_arr;
+    wordscramble->hintPointer = hintArr;
+    fischerYates(guessArr, arrLength);
+    // creates another randomized index array
+    wordscramble->guessIndexes = guessArr;
+    
+
+
     delete rand_index_array;
-    
-    return scrambled_arr;
-    
+    return scrambled_arr;    
+};
+
+
+void swap (int *a, int *b){
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+};
+
+
+void randomize(int arr[], int n){
+    srand(time(NULL));
+
+    for (int i= n-1; i>0; i--){
+        int j = rand () % (i+1);
+
+        swap(&arr[i], &arr[j]);
+    }
+
+};
+
+// lets try out fischer-yates for this
+void fischerYates(int arr[], int arrLength){
+    int n = arrLength;
+    randomize(arr, n);
+
 };

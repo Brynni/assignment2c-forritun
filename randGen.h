@@ -11,9 +11,14 @@ class WordScramble{
         char* arrPointer;
         char* scrambledArrPointer;
         char* hintPointer;
+        char* hintArr;
+        int numOfGuesses;
+        int* guessIndexes;
+        int numOfHints;
 
         friend char* ScrambleArray(WordScramble *wordscramble);
         friend ostream& operator<<(ostream& out, WordScramble *wordscramble);
+        
 
         ~WordScramble() 
         {
@@ -21,4 +26,9 @@ class WordScramble{
         }
 };
 
+char* generateHintArray(char Word[]);
+int* orderOfGuessesArr(char word[]);
+void swap (int arr[], int n);
+void randomize(int arr[], int n);
+void fischerYates(int arr[], int arrLength);
 #endif //RANDGEN_ASSIGNMENT2
