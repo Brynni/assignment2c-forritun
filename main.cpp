@@ -69,39 +69,28 @@ int main() {
     hintGameArray[3] = 't';
     hintGameArray[4] = '!';
 
+    FILE *word_file_read;
     while (gameQuit == false)
     {
-        
-        cout << "Please enter a name: "; // Ask user for name of file
-        cin >> nameOfFile; // Get their input
-        
+        if (fileChosen == false)
+        {
+            cout << "Please enter a name: "; // Ask user for name of file
+            cin >> nameOfFile; // Get their input
+            strcat(nameOfFile, ".txt"); // Add txt ending 
+        }
         
         if (nameOfFile[0] == quitGameArray[0] && nameOfFile[1] == quitGameArray[1] && nameOfFile[2] == quitGameArray[2] && nameOfFile[3] == quitGameArray[3] && nameOfFile[4] == quitGameArray[4])
             {
                 gameQuit = true;
-                
             }
-
-        
-        strcat(nameOfFile, ".txt"); // Add txt ending 
-        FILE *word_file_read;
+        //Setup the word which will be on the stack
         char word[50];
         char i;
         char randNum;
         i = 0;
-
-    
-
-    
-        
+        //Generate seed and generate the random num
         srand (time(NULL));
         randNum = rand()%606;
-        char dest[40];
-
-
-
-        
-
 
         word_file_read = fopen(nameOfFile, "r+");
 
@@ -139,6 +128,8 @@ int main() {
                         bool matchingElems = true;
                         for (int k = 0;k < b; k++)
                         {
+                            //Check if the input is "hint!"
+                            //If hint, mark as hint and generate hint
                             if (k == 0 && usersGuess[0] == hintGameArray[0] && usersGuess[1] == hintGameArray[1] && usersGuess[2] == hintGameArray[2] && usersGuess[3] == hintGameArray[3] && usersGuess[4] == hintGameArray[4])
                             {
                                 hintAskedFor = true;
@@ -151,13 +142,17 @@ int main() {
                                     hintActivated = true;
                                 }
                             }
-
+                            
+                            //Check if input is "quit!"
+                            //If input is == quit then mark the counter as finished and change the quit bool to true
                             if (k == 0 && usersGuess[0] == quitGameArray[0] && usersGuess[1] == quitGameArray[1] && usersGuess[2] == quitGameArray[2] && usersGuess[3] == quitGameArray[3] && usersGuess[4] == quitGameArray[4])
                             {
                                 gameQuit = true;
                                 k = b;
                             }
-
+                            
+                            //Check if the char matches the correct string char
+                            //If it fails output the message alerting of the players failure and mark the matching elems as false;
                             if (usersGuess[k] != scrambledWord->arrPointer[k] && gameQuit != true && hintAskedFor == false)
                             {
                                 cout << "wrong guess dude, try again \n" << scrambledWord->scrambledArrPointer << "\n";
@@ -165,13 +160,11 @@ int main() {
                                 matchingElems = false;
                             } 
                             
+                            //If this not here it 
                             else{
                                 hintAskedFor = false;
                             }
 
-                            if (gameQuit == true){
-                                cout << "exiting game....";
-                            }
                         }
                         if (matchingElems == true)
                         {
@@ -190,12 +183,13 @@ int main() {
                 }
                 i++;
             }
-            fclose(word_file_read);
-            
-            cout << "were done here!\n";
-            delete quitGameArray;
-            delete hintGameArray;
+        
         }
     }
+    fclose(word_file_read);
+            
+    cout << "exiting game...." << endl;
+    delete quitGameArray;
+    delete hintGameArray;
     return 0;
 }

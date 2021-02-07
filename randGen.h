@@ -15,9 +15,10 @@ class WordScramble{
         friend char* ScrambleArray(WordScramble *wordscramble);
         friend ostream& operator<<(ostream& out, WordScramble *wordscramble);
 
-        ~WordScramble() {
-        cout << "Object is being deleted" << endl;
-    }
+        ~WordScramble() 
+        {
+            cout << "Object is being deleted" << endl;
+        }
 };
 
 #endif //RANDGEN_ASSIGNMENT2
