@@ -58,6 +58,7 @@ int main() {
     quitGameArray[1] = 'u';
     quitGameArray[2] = 'i';
     quitGameArray[3] = 't';
+    quitGameArray[4] = '!';
     while (gameQuit == false)
     {
         
@@ -65,7 +66,7 @@ int main() {
         cin >> nameOfFile; // Get their input
         
         
-        if (nameOfFile[0] == quitGameArray[0] && nameOfFile[1] == quitGameArray[1] && nameOfFile[2] == quitGameArray[2] && nameOfFile[3] == quitGameArray[3] == nameOfFile[4] == quitGameArray[4])
+        if (nameOfFile[0] == quitGameArray[0] && nameOfFile[1] == quitGameArray[1] && nameOfFile[2] == quitGameArray[2] && nameOfFile[3] == quitGameArray[3] && nameOfFile[4] == quitGameArray[4])
             {
                 gameQuit = true;
                 
@@ -118,14 +119,6 @@ int main() {
                     scrambledWord = new WordScramble();
                     scrambledWord->length = b;
                     char* usersGuess = new char[b];
-                    char* quitGameArray = new char[4];
-                    quitGameArray[0] = 'q';
-                    quitGameArray[1] = 'u';
-                    quitGameArray[2] = 'i';
-                    quitGameArray[3] = 't';
-                    quitGameArray[4] = '!';
-                    
-
                     scrambledWord->arrPointer = word;
                     
                     scrambledWord->scrambledArrPointer=ScrambleArray(scrambledWord);
