@@ -16,7 +16,7 @@ class WordScramble{
         int* guessIndexes;
         int numOfHints;
         void generateHints(WordScramble *wordscramble){
-        if(wordscramble->numOfHints != wordscramble->length-1){
+        if(wordscramble->numOfHints != wordscramble->length){
             int hintIndex = wordscramble->guessIndexes[wordscramble->numOfHints];
             char hintLetter = wordscramble->arrPointer[hintIndex];
             wordscramble->hintArr[hintIndex] = hintLetter;

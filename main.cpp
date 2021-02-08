@@ -87,7 +87,7 @@ int main() {
         {
             if (fileChosen == false)
             {
-                cout << "Please enter a name: "; // Ask user for name of file
+                cout << "Please enter a filename: "; // Ask user for name of file
                 cin >> setw(127) >>nameOfFile; // Get their input
                 strcat(nameOfFile, ".txt"); // Add txt ending 
                 
@@ -97,6 +97,16 @@ int main() {
                 {
                     gameQuit = true;
                 }
+            
+            cout << "Game Rules: " << endl;
+            cout << "You start the game with 10 lives, for each hint that you take you loose a live " << endl;
+            cout << "You have unlimmited guesses to guess each word but you can always get a hint by typing: hint!" << endl;
+            cout << "Upon reaching 0 lives you will start a new game" << endl;
+            cout << "However you can always type: quit! to stop playing" << endl;
+            cout << "   " << endl;
+            cout << "   " << endl;
+            cout << "   " << endl;
+ 
             //Setup the word which will be on the stack
             char word[50];
             char i;
@@ -140,6 +150,9 @@ int main() {
                         scrambledWord->arrPointer = word;
                         
                         scrambledWord->scrambledArrPointer=ScrambleArray(scrambledWord);
+
+
+
                         cout << scrambledWord << endl;
                         while (correctGuess == false && gameQuit == false && player -> amountOfLives > 0){
                             cout << "\nPlease Enter a guess : ";
