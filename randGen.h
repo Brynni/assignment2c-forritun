@@ -15,6 +15,15 @@ class WordScramble{
         int numOfGuesses;
         int* guessIndexes;
         int numOfHints;
+        void generateHints(WordScramble *wordscramble){
+        if(wordscramble->numOfHints != wordscramble->length-1){
+            int hintIndex = wordscramble->guessIndexes[wordscramble->numOfHints];
+            char hintLetter = wordscramble->arrPointer[hintIndex];
+            wordscramble->hintArr[hintIndex] = hintLetter;
+            wordscramble->numOfHints++;
+            }
+        };
+        
 
         friend char* ScrambleArray(WordScramble *wordscramble);
         friend ostream& operator<<(ostream& out, WordScramble *wordscramble);
@@ -31,4 +40,6 @@ int* orderOfGuessesArr(char word[]);
 void swap (int arr[], int n);
 void randomize(int arr[], int n);
 void fischerYates(int arr[], int arrLength);
+
+
 #endif //RANDGEN_ASSIGNMENT2

@@ -45,13 +45,12 @@ char* ScrambleArray(WordScramble *wordscramble) {
         hintArr[i] = '-';
     };
 
+    wordscramble->hintArr = hintArr;
+
     for (int i=0; i<arrLength; i++){
         guessArr[i] = i;
     };
 
-
-
-    
     for (int i=0; i<arrLength;i++){
 
         int randomNum = rand()%arrMaxPos;
@@ -83,11 +82,11 @@ char* ScrambleArray(WordScramble *wordscramble) {
     fischerYates(guessArr, arrLength);
     // creates another randomized index array
     wordscramble->guessIndexes = guessArr;
-    
 
 
     delete rand_index_array;
-    return scrambled_arr;    
+    return scrambled_arr;
+
 };
 
 
@@ -113,5 +112,9 @@ void randomize(int arr[], int n){
 void fischerYates(int arr[], int arrLength){
     int n = arrLength;
     randomize(arr, n);
+    for(int i=0; i<arrLength; i++){
+        cout << arr[i];
+    }
 
 };
+

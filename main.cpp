@@ -156,6 +156,8 @@ int main() {
                                     matchingElems = false;
                                     player -> amountOfLives --;
                                     // Call the new function. See this for example scrambledWord->scrambledArrPointer=ScrambleArray(scrambledWord);
+                                    // this should work but it doesn't?
+                                    scrambledWord->generateHints(scrambledWord);
                                     // but with the hint thingy rather
                                     if(hintActivated == false)
                                     {
