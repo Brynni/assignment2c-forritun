@@ -77,11 +77,13 @@ char* ScrambleArray(WordScramble *wordscramble) {
         scrambled_arr[i] = myWord[randomNum];
     };
     scrambled_arr[arrLength] = '\0';
+    
     wordscramble->scrambledArrPointer = scrambled_arr;
     wordscramble->hintPointer = hintArr;
     fischerYates(guessArr, arrLength);
     // creates another randomized index array
     wordscramble->guessIndexes = guessArr;
+    hintArr[arrLength] = '\0';
 
 
     delete rand_index_array;
@@ -101,7 +103,7 @@ void randomize(int arr[], int n){
     srand(time(NULL));
 
     for (int i= n-1; i>0; i--){
-        int j = rand () % (i+1);
+        int j = rand () % (i);
 
         swap(&arr[i], &arr[j]);
     }

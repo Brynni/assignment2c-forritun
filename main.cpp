@@ -4,19 +4,19 @@
 
 //PART 1 60%
 //TODO Take a word from wordlist X
-//TODO Scramble word
-//TODO Show scrambled word
-//TODO Allow user to guess the word
-//TODO Loop until user wants to stop
+//TODO Scramble word X
+//TODO Show scrambled word X
+//TODO Allow user to guess the word X 
+//TODO Loop until user wants to stop X
 
 //PART 2 80%
-//TODO User can ask for a hint
-//TODO The word is shown with dasches, but one random letter is in the correct place.
-//TODO For each hint, one correct letter is added.
-//TODO User starts with 10 points and loses one point for each hint.
+//TODO User can ask for a hint X 
+//TODO The word is shown with dasches, but one random letter is in the correct place. X
+//TODO For each hint, one correct letter is added. X 
+//TODO User starts with 10 points and loses one point for each hint. X
 //TODO Implement game rules where 
 //Game is either:
-//How many words can you guess before you have 0 points.
+//How many words can you guess before you have 0 points. X
 //or:
 //How many points do you have left after 7 words.
 
@@ -156,8 +156,11 @@ int main() {
                                     matchingElems = false;
                                     player -> amountOfLives --;
                                     // Call the new function. See this for example scrambledWord->scrambledArrPointer=ScrambleArray(scrambledWord);
-                                    // this should work but it doesn't?
                                     scrambledWord->generateHints(scrambledWord);
+                                    for (int i = 0; i<scrambledWord->length;i++){
+                                        cout << scrambledWord->hintArr[i];
+                                    }
+                                    cout << "   " << endl;
                                     // but with the hint thingy rather
                                     if(hintActivated == false)
                                     {
