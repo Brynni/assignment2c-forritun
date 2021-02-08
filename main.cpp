@@ -157,10 +157,7 @@ int main() {
                                     player -> amountOfLives --;
                                     // Call the new function. See this for example scrambledWord->scrambledArrPointer=ScrambleArray(scrambledWord);
                                     scrambledWord->generateHints(scrambledWord);
-                                    for (int i = 0; i<scrambledWord->length;i++){
-                                        cout << scrambledWord->hintArr[i];
-                                    }
-                                    cout << "   " << endl;
+                                    cout << scrambledWord->scrambledArrPointer << "\n";
                                     // but with the hint thingy rather
                                     if(hintActivated == false)
                                     {
@@ -199,9 +196,10 @@ int main() {
                             }
                             if (hintActivated == true)
                             {
-                                cout << "a hint has been requested!: ";
-                                //Insert the hint elems here to be output
-                                cout << "Insert hint elems here;";
+                                for (int i = 0; i<scrambledWord->length;i++){
+                                        cout << scrambledWord->hintArr[i];
+                                    }
+                                    cout << "   " << endl;
                             }
                             cout << "Lives left: " << player -> amountOfLives << endl ;
                             cout << "Current score: "<< player -> pointCount << endl;
