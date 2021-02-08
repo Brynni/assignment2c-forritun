@@ -45,6 +45,7 @@
 
 #include "randGen.h"
 #include "player.h"
+#include "highscores.h"
 
 using namespace std;
 
@@ -228,6 +229,67 @@ int main() {
         else {
             cout << "Gameover Bucko!" << endl;
             cout << player -> pointCount  << endl;
+            player->PlayerName = new char[3];
+
+
+            cout << "Enter name for highscore table: ";
+            cin >> player->PlayerName;
+            Scores userscore = Scores();
+            userscore.score = player->pointCount;
+            userscore.username = player->PlayerName;
+            FILE *highscore_file_read;
+            FILE *highscore_read_amount_lines;
+            char high_score_file[50];
+            char line [50];
+            int hs_number_of_lines = 0;
+            
+            cout << "Please enter a filename: "; // Ask user for name of file
+                cin >> setw(127) >>high_score_file; // Get their input
+                strcat(high_score_file, ".txt"); // Add txt ending 
+            cout << high_score_file;
+    	    highscore_file_read = fopen(high_score_file, "r+");
+            highscore_read_amount_lines = fopen(high_score_file, "r+");
+                while (fscanf(highscore_read_amount_lines, "%s", line) != EOF)
+                {
+                    hs_number_of_lines++;
+                };
+            
+            // creates an array of struts of the wished for size
+            // the size is /2 cuz we always get an even number size 
+            // because every line contains two lines or something, the socre and the name
+
+            Scores *allHighscores  = new Scores[hs_number_of_lines/2];
+
+            // even numbers are names
+            // odd numbers are the score
+            
+            for (int i=0; i<hs_number_of_lines; i=i+2){
+                
+                cout << "creating obj number: " << i;
+                // TODO
+                // Here we should create the structs and add it to the Scores Array 
+                // should be doing something like :
+                // struct tmp = new struct()
+                // tmp.name = line[i] or something
+                // tmp.int = int(line [i+1])
+            };
+
+            // so we need to create a struct for each obj
+            // each struct consists of name and score
+
+            // TODO
+            // Here we would put the new score in its correct position
+
+
+            //TODO 
+            // Write the new arr to the file
+
+
+            // TODO maybe add a way for the user to see all the highscores in the file?
+
+
+            
+            cout << endl;
             player -> pointCount = 0;
             player -> amountOfLives = 10;
             system("pause");
