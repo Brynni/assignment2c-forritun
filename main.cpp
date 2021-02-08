@@ -11,7 +11,7 @@
 
 //PART 2 80%
 //TODO User can ask for a hint
-//TODO The word is shown with dashes, but one random letter is in the correct place.
+//TODO The word is shown with dasches, but one random letter is in the correct place.
 //TODO For each hint, one correct letter is added.
 //TODO User starts with 10 points and loses one point for each hint.
 //TODO Implement game rules where 
@@ -41,6 +41,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h> 
+#include <iomanip>
 
 #include "randGen.h"
 #include "player.h"
@@ -49,13 +50,15 @@ using namespace std;
 
 int main() {
     
+    int numberOfLines = 0;
+
     bool gameQuit = false;
     bool hintActivated = false;
     bool hintAskedFor = false;
     bool fileChosen = false;
     bool correctGuess;
     
-    char nameOfFile[32];
+    char nameOfFile[128];
 
     char* quitGameArray = new char[4];
     quitGameArray[0] = 'q';
@@ -77,6 +80,7 @@ int main() {
     player -> amountOfLives = 10;
 
     FILE *word_file_read;
+    FILE *word_file_read_amount_lines;
     while (gameQuit == false)
     {
         if (player -> amountOfLives != 0)
@@ -84,8 +88,9 @@ int main() {
             if (fileChosen == false)
             {
                 cout << "Please enter a name: "; // Ask user for name of file
-                cin >> nameOfFile; // Get their input
+                cin >> setw(127) >>nameOfFile; // Get their input
                 strcat(nameOfFile, ".txt"); // Add txt ending 
+                
             }
             
             if (nameOfFile[0] == quitGameArray[0] && nameOfFile[1] == quitGameArray[1] && nameOfFile[2] == quitGameArray[2] && nameOfFile[3] == quitGameArray[3] && nameOfFile[4] == quitGameArray[4])
@@ -100,9 +105,6 @@ int main() {
             //Generate seed and generate the random num
             srand (time(NULL));
 
-            //TODO laga thetta, ma ekki vera fasti
-            randNum = rand()%606;
-
             word_file_read = fopen(nameOfFile, "r+");
 
             if (word_file_read == NULL && gameQuit != true)
@@ -111,6 +113,12 @@ int main() {
             }
             else
             {
+                word_file_read_amount_lines = fopen(nameOfFile, "r+");
+                while (fscanf(word_file_read_amount_lines, "%s", word) != EOF)
+                {
+                    numberOfLines++;
+                }
+                randNum = rand()%numberOfLines;
                 fileChosen = true;
                 while (fscanf(word_file_read, "%s", word) != EOF)
                 {
