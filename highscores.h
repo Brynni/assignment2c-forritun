@@ -19,10 +19,17 @@ struct Scores{
         void Set_score(int points, Scores score){
             score.score = points;
         };
+    private:
+        bool compareHighScores(Scores score1, Scores score2);
+
+        
+        
 
 };
 
-
-
-
+int findIndex(Scores arr[], Scores score, int arrSize);
+void putScoreInRightPlace(Scores arr[], Scores userscore, int index);
+void moveElemToRight(Scores arr[], int higher, int lower);
+void moveElements (Scores arr[], int index, Scores tmp);
+void driverCodeForOrdering(Scores userscore, Scores arr[], int arrLength);
 #endif

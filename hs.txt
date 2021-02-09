@@ -1,6 +1,1 @@
-abj 12
-abb 11
-cio 10
-dio 9
-lee 4
-gng 3
+ves 1

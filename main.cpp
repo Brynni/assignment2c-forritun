@@ -237,6 +237,7 @@ int main() {
             Scores userscore = Scores();
             userscore.score = player->pointCount;
             userscore.username = player->PlayerName;
+            cout << userscore.username << endl;
             FILE *highscore_file_read, *highscore_read_amount_lines, *hs_fr, *hs_all_scores;
             char high_score_file[180];
             char line [50];
@@ -255,9 +256,10 @@ int main() {
                     hs_number_of_lines++;
                            
             };
+
             
 
-            Scores *all_high_scores = new Scores[(hs_number_of_lines/2)];
+            Scores *all_high_scores = new Scores[(hs_number_of_lines/2)+1];
 
             
             int counter = 0;
@@ -278,6 +280,7 @@ int main() {
                         usrname[a] = line[a];
                         a++;
                     };
+                    usrname[3] ='\0';
                     tmp->username = usrname;
                     all_high_scores[arrIndex] = *tmp;
                 }
@@ -299,10 +302,25 @@ int main() {
                 counter++;
             };
 
-
-            // TODO
+            fclose(highscore_file_read);
+            fclose(hs_fr);
             // Here we would put the new score in its correct position
-            
+            driverCodeForOrdering(userscore, all_high_scores, (hs_number_of_lines/2)+1);
+
+            // Great now we need to write it to the text file which for some reason isn't working
+
+            ofstream fout;
+            fout.open(high_score_file);
+            for (int i= 0; i<hs_number_of_lines/2 +1; i++){
+                if (i < hs_number_of_lines/2){
+                    fout << all_high_scores[i].username << ' ' << all_high_scores[i].score << '\n';
+                }
+                else{
+                    fout << all_high_scores[i].username << ' ' << all_high_scores[i].score;
+                }
+                
+            }
+            fout.close();
 
 
 
