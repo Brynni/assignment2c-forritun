@@ -4,7 +4,7 @@ using namespace std;
 
 //Overide out<< operator to output the entire data bank of the word
 ostream& operator<<(ostream& out, WordScramble *wordscramble){
-    out << " This is the word: " << wordscramble->arrPointer << " This is the scrambled word: " << wordscramble->scrambledArrPointer;
+    out << "This is the scrambled word: " << wordscramble->scrambledArrPointer;
     return out;
 }
 

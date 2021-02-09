@@ -25,11 +25,11 @@
 //Find a way to make this work in the overall point calculation.  You can re-invent the entire point calculation if you want.
 
 //PART 3 100%
-//TODO Add time as a factor (see 5% bonus on v.B)
+//TODO Add time as a factor (see 5% bonus on v.B) X
 //TODO Add highscore table X
-//TODO For the highscores to be interesting add more ways to calculate scores.  Longer streaks, speed bonuses, etc.
+//TODO For the highscores to be interesting add more ways to calculate scores.  Longer streaks, speed bonuses, etc. X
 //TODO Store highscores in file. X
-//TODO Allow user to choose to see top 5 scores or full table. -> this would be simple to do
+//TODO Allow user to choose to see top 5 scores or full table. -> this would be simple to do X
 
 //5-10% BONUS
 // Add extra mode crossword jumble
@@ -42,6 +42,8 @@
 #include <string.h>
 #include <time.h> 
 #include <iomanip>
+#include <chrono>
+
 
 #include "randGen.h"
 #include "player.h"
@@ -52,12 +54,13 @@ using namespace std;
 int main() {
     
     int numberOfLines = 0;
-
     bool gameQuit = false;
+    bool gameStarted = false;
     bool hintActivated = false;
     bool hintAskedFor = false;
     bool fileChosen = false;
     bool correctGuess;
+    time_t start,end;
     
     char nameOfFile[128];
 
@@ -79,6 +82,7 @@ int main() {
     player = new Player();
     player -> pointCount = 0;
     player -> amountOfLives = 10;
+    player -> comboCount = 1;
 
     FILE *word_file_read;
     FILE *word_file_read_amount_lines;
@@ -99,15 +103,23 @@ int main() {
                     gameQuit = true;
                 }
             
-            cout << "Game Rules: " << endl;
-            cout << "You start the game with 10 lives, for each hint that you take you loose a live " << endl;
-            cout << "You have unlimmited guesses to guess each word but you can always get a hint by typing: hint!" << endl;
-            cout << "Upon reaching 0 lives you will start a new game" << endl;
-            cout << "However you can always type: quit! to stop playing" << endl;
-            cout << "   " << endl;
-            cout << "   " << endl;
-            cout << "   " << endl;
- 
+            if (gameStarted == false)
+            {
+                cout << "Game Rules: " << endl;
+                cout << "You start the game with 10 lives, for each hint that you take you loose a live " << endl;
+                cout << "You have unlimmited guesses to guess each word but you can always get a hint by typing: hint!" << endl;
+                cout << "Upon reaching 0 lives you will start a new game" << endl;
+                cout << "However you can always type: quit! to stop playing" << endl;
+                cout << "Solve the word within in 30 seconds for a speed bonus!" << endl;
+                cout << "Combo bonuses stack! So try to be fast!" << endl;
+                cout << "   " << endl;
+                cout << "   " << endl;
+                // To allow the player to read the rules
+                system("pause");
+                gameStarted = true;
+
+            }
+
             //Setup the word which will be on the stack
             char word[50];
             char i;
@@ -135,6 +147,7 @@ int main() {
                 {
                     if (i == randNum && gameQuit == false)
                     {   
+                        time (&start);
                         correctGuess = false;
                         int i = 0;
                         int b = 0;
@@ -143,6 +156,7 @@ int main() {
                             //Mhm counting letters. Maybe use a built in function
                         }
                         
+                        //TODO check this i out. If it needs to be removed since there is one just like it above
                         i=0;
                         WordScramble *scrambledWord;
                         scrambledWord = new WordScramble();
@@ -206,7 +220,8 @@ int main() {
                             {
                                 correctGuess = true;
                                 hintActivated = false;
-                                player -> pointCount ++;
+                                player -> pointCount = player -> pointCount + player -> comboCount * 2;
+                                time (&end);
                             }
                             if (hintActivated == true)
                             {
@@ -215,9 +230,23 @@ int main() {
                                     }
                                     cout << "   " << endl;
                             }
-                            cout << "Lives left: " << player -> amountOfLives << endl ;
-                            cout << "Current score: "<< player -> pointCount << endl;
+                            cout << player;
+                            
                         }
+                        double dif = difftime (end,start);
+                        
+                        if(dif < 30){
+                            player -> comboCount ++;
+                            cout << "Speed bonus! COMBO! X" << player -> comboCount << " points!" << endl;
+                            if (player -> comboCount > 2){
+                                cout << "You're on fire!!! KEEP GOING!" << endl;
+                            }
+                        }
+                        else{
+                            player -> comboCount = 1;
+                            cout << "You're too slow! COMBO LOST!" << endl;
+                        }
+                        //std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]" << std::endl;
                         delete scrambledWord;
                         delete usersGuess;
                     }
@@ -333,7 +362,7 @@ int main() {
 
             if (input[0] == '1'){
                 for (int i = 0; i<hs_number_of_lines/2 + 1; i++){
-                    cout << i+1 <<". USERNAME: " << all_high_scores[i].username << '\t' << "SOCRE: " <<   all_high_scores[i].score << endl;
+                    cout << i+1 <<". USERNAME: " << all_high_scores[i].username << '\t' << "SCORE: " <<   all_high_scores[i].score << endl;
                 };
             };
 
@@ -341,14 +370,14 @@ int main() {
                 if (hs_number_of_lines/2+1 < 5){
                     cout << "TOP " <<  hs_number_of_lines/2 +1 << "SCORES: " << endl;
                     for (int i=0; i < hs_number_of_lines/2 + 1; i++) {
-                        cout << i+1 <<". USERNAME: " << all_high_scores[i].username << '\t' << "SOCRE: " <<   all_high_scores[i].score << endl;
+                        cout << i+1 <<". USERNAME: " << all_high_scores[i].username << '\t' << "SCORE: " <<   all_high_scores[i].score << endl;
                     }
                 }
 
                 else {
                     cout << "TOP 5 SCORES: " << endl;
                     for (int i=0; i < 5; i++) {
-                    cout << i+1 <<". USERNAME: " << all_high_scores[i].username << '\t' << "SOCRE: " <<   all_high_scores[i].score << endl;
+                    cout << i+1 <<". USERNAME: " << all_high_scores[i].username << '\t' << "SCORE: " <<   all_high_scores[i].score << endl;
                 }
             }
         }
@@ -368,5 +397,6 @@ int main() {
     cout << "exiting game...." << endl;
     delete quitGameArray;
     delete hintGameArray;
+    delete player;
     return 0;
 }

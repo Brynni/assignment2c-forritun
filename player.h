@@ -9,6 +9,7 @@ class Player{
     public:
         int amountOfLives;
         int pointCount;
+        int comboCount;
         char* PlayerName; //For the c requirement
 
         friend ostream& operator<<(ostream& out, Player *player);
