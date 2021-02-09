@@ -26,10 +26,10 @@
 
 //PART 3 100%
 //TODO Add time as a factor (see 5% bonus on v.B)
-//TODO Add highscore table
+//TODO Add highscore table X
 //TODO For the highscores to be interesting add more ways to calculate scores.  Longer streaks, speed bonuses, etc.
-//TODO Store highscores in file.
-//TODO Allow user to choose to see top 5 scores or full table.
+//TODO Store highscores in file. X
+//TODO Allow user to choose to see top 5 scores or full table. -> this would be simple to do
 
 //5-10% BONUS
 // Add extra mode crossword jumble
@@ -321,17 +321,41 @@ int main() {
                 
             }
             fout.close();
-
-
-
-            //TODO 
-            // Write the new arr to the file
-
-
             // TODO maybe add a way for the user to see all the highscores in the file?
+            char input [1];
+
+            cout << "Would you like to: " << endl;
+            cout << "1. See all highscores " << endl;
+            cout << "2. See top five scores " << endl;
+            cout << "3. Don't see anything: " << endl;
+
+            cin >> input;
+
+            if (input[0] == '1'){
+                for (int i = 0; i<hs_number_of_lines/2 + 1; i++){
+                    cout << i+1 <<". USERNAME: " << all_high_scores[i].username << '\t' << "SOCRE: " <<   all_high_scores[i].score << endl;
+                };
+            };
+
+            if(input[0] == '2'){
+                if (hs_number_of_lines/2+1 < 5){
+                    cout << "TOP " <<  hs_number_of_lines/2 +1 << "SCORES: " << endl;
+                    for (int i=0; i < hs_number_of_lines/2 + 1; i++) {
+                        cout << i+1 <<". USERNAME: " << all_high_scores[i].username << '\t' << "SOCRE: " <<   all_high_scores[i].score << endl;
+                    }
+                }
+
+                else {
+                    cout << "TOP 5 SCORES: " << endl;
+                    for (int i=0; i < 5; i++) {
+                    cout << i+1 <<". USERNAME: " << all_high_scores[i].username << '\t' << "SOCRE: " <<   all_high_scores[i].score << endl;
+                }
+            }
+        }
 
 
-            
+            delete all_high_scores;
+
             cout << endl;
             player -> pointCount = 0;
             player -> amountOfLives = 10;

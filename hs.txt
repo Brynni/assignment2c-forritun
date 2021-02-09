@@ -1,8 +1,11 @@
-abj 13
+abj 12
 abb 11
 cio 10
 dio 9
+hint! 8
+ves 5
 lee 4
+ves 3
 as0 0
 as1 0
 as2 0
