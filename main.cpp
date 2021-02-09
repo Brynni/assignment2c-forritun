@@ -237,48 +237,72 @@ int main() {
             Scores userscore = Scores();
             userscore.score = player->pointCount;
             userscore.username = player->PlayerName;
-            FILE *highscore_file_read;
-            FILE *highscore_read_amount_lines;
-            char high_score_file[50];
+            FILE *highscore_file_read, *highscore_read_amount_lines, *hs_fr, *hs_all_scores;
+            char high_score_file[180];
             char line [50];
             int hs_number_of_lines = 0;
             
-            cout << "Please enter a filename: "; // Ask user for name of file
+            
+            cout << "Please enter a filename if in terminal type hs else copy paste full path : "; // Ask user for name of file
                 cin >> setw(127) >>high_score_file; // Get their input
                 strcat(high_score_file, ".txt"); // Add txt ending 
-            cout << high_score_file;
     	    highscore_file_read = fopen(high_score_file, "r+");
             highscore_read_amount_lines = fopen(high_score_file, "r+");
-                while (fscanf(highscore_read_amount_lines, "%s", line) != EOF)
-                {
+
+            // Getting number of lines in highscore file
+            while (fscanf(highscore_read_amount_lines, "%s", line) != EOF)
+            {
                     hs_number_of_lines++;
-                };
+                           
+            };
             
-            // creates an array of struts of the wished for size
-            // the size is /2 cuz we always get an even number size 
-            // because every line contains two lines or something, the socre and the name
 
-            Scores *allHighscores  = new Scores[hs_number_of_lines/2];
+            Scores *all_high_scores = new Scores[(hs_number_of_lines/2)];
 
-            // even numbers are names
-            // odd numbers are the score
             
-            for (int i=0; i<hs_number_of_lines; i=i+2){
-                
-                cout << "creating obj number: " << i;
-                // TODO
-                // Here we should create the structs and add it to the Scores Array 
-                // should be doing something like :
-                // struct tmp = new struct()
-                // tmp.name = line[i] or something
-                // tmp.int = int(line [i+1])
+            int counter = 0;
+            int arrIndex = 0;
+            int *highscores = new int[(hs_number_of_lines/2)];
+            hs_fr = fopen(high_score_file, "r+");
+            hs_all_scores = fopen(high_score_file, "r+");
+
+
+            // Creates an array of Score structs
+            while (fscanf(hs_all_scores, "%s", line) != EOF)
+            {
+                Scores *tmp = new Scores();
+                if (counter % 2 == 0){
+                    char *usrname = new char[3];
+                    int a = 0;
+                    while(line[a] != '\0'){
+                        usrname[a] = line[a];
+                        a++;
+                    };
+                    tmp->username = usrname;
+                    all_high_scores[arrIndex] = *tmp;
+                }
+
+
+                // read the ints
+                else{
+                    char* scoreing  = new char[30];
+                    int a = 0;
+                    while(line[a] != '\0'){
+                        scoreing[a] = line[a];
+                        a++;
+                    };
+                    int score  = atoi(scoreing);
+                    all_high_scores[arrIndex].score = score;
+                    delete scoreing;
+                    arrIndex ++;
+                }
+                counter++;
             };
 
-            // so we need to create a struct for each obj
-            // each struct consists of name and score
 
             // TODO
             // Here we would put the new score in its correct position
+            
 
 
             //TODO 
