@@ -2,6 +2,9 @@
 #include <iostream>
 using namespace std;
     
+//Function for comparing highscores. 
+//If the first highscore passed in is bigger than the next the function returns true
+//Else false 
 bool compareHighScores(Scores score1, Scores score2){
     if (score1.score > score2.score){
         return true;
@@ -10,8 +13,7 @@ bool compareHighScores(Scores score1, Scores score2){
 };
 
 
-
-
+//Find the index of the first number that the passed in score is larger than
 int findIndex(Scores arr[], Scores score, int arrSize){
     int counter = 0;
     for(counter; counter < arrSize; counter++){
@@ -23,14 +25,15 @@ int findIndex(Scores arr[], Scores score, int arrSize){
 };
 
 
+// This essentially swaps the elements and set tmp to the next one
 void moveElements (Scores arr[], int index, Scores tmp){
-    // This should essentially swap the elements and set tmp to the next one
     Scores next_tmp = arr[index];
     arr[index] = tmp;
     tmp = next_tmp;
 };
 
 
+//Places a score in the correct postition within the leaderboard
 void putScoreInRightPlace(Scores arr[], Scores userscore, int index, int arrLength){
     Scores *tmp = new Scores[arrLength];
     for (int i=0; i< arrLength; i++){
@@ -46,14 +49,11 @@ void putScoreInRightPlace(Scores arr[], Scores userscore, int index, int arrLeng
             tmp[i] = arr[i-1];
         }
     };
-
     for (int i=0; i< arrLength; i++){
         arr[i] = tmp[i];
     }
 
 };
-
-
 
 
 void driverCodeForOrdering(Scores userscore, Scores arr[], int arrLength) {
@@ -72,6 +72,5 @@ void driverCodeForOrdering(Scores userscore, Scores arr[], int arrLength) {
     int index = findIndex(arr, userscore, arrLength);
 
     // and moving the rest of the array
-
     putScoreInRightPlace(arr, userscore, index, arrLength);
 };

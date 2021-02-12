@@ -13,11 +13,6 @@ class Player{
         char* PlayerName; //For the c requirement
 
         friend ostream& operator<<(ostream& out, Player *player);
-
-        ~Player() 
-        {
-            cout << "Player is being deleted" << endl;
-        }
 };
 
 #endif //PLAYER_ASSIGNMENT2
